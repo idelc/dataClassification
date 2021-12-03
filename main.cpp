@@ -10,7 +10,9 @@ int main(){
     double small[500][11];
     double big[2000][51]; 
 
-    forwardSelection(small);
+    // forwardSelectionSmall(small);
+    readSmall(small);
+    forwardSelectionSmall(small);
 
     return 0;
 }
