@@ -7,8 +7,8 @@
 
 using namespace std;
 
-void readSmall(double data[][11]){
-    ifstream read("Ver_2_CS170_Fall_2021_Small_data__86.txt");
+void readData(double data[][11]){
+    ifstream read("Ver_2_CS170_Fall_2021_Small_data__33.txt");
     if(!read.is_open()){
         cout << "Error opening file" << endl;
         exit(1);
@@ -25,8 +25,8 @@ void readSmall(double data[][11]){
     read.close();
 }
 
-void readBig(double data[][51]){
-    ifstream read("Ver_2_CS170_Fall_2021_LARGE_data__22.txt");
+void readData(double data[][51]){
+    ifstream read("Ver_2_CS170_Fall_2021_LARGE_data__14.txt");
     if(!read.is_open()){
         cout << "Error opening file" << endl;
         exit(1);
