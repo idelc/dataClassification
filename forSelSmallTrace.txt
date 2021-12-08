@@ -1,0 +1,90 @@
+Default rate is: 0.854
+
+Level 1 
+Considering feature 1...	accuracy is 0.848
+Considering feature 2...	accuracy is 0.744
+Considering feature 3...	accuracy is 0.764
+Considering feature 4...	accuracy is 0.792
+Considering feature 5...	accuracy is 0.734
+Considering feature 6...	accuracy is 0.752
+Considering feature 7...	accuracy is 0.736
+Considering feature 8...	accuracy is 0.782
+Considering feature 9...	accuracy is 0.776
+Considering feature 10...	accuracy is 0.718
+On level 1, added feature 1
+
+Level 2 
+Considering feature 2...	accuracy is 0.814
+Considering feature 3...	accuracy is 0.822
+Considering feature 4...	accuracy is 0.832
+Considering feature 5...	accuracy is 0.826
+Considering feature 6...	accuracy is 0.83
+Considering feature 7...	accuracy is 0.826
+Considering feature 8...	accuracy is 0.858
+Considering feature 9...	accuracy is 0.962
+Considering feature 10...	accuracy is 0.836
+On level 2, added feature 9
+
+Level 3 
+Considering feature 2...	accuracy is 0.918
+Considering feature 3...	accuracy is 0.926
+Considering feature 4...	accuracy is 0.91
+Considering feature 5...	accuracy is 0.932
+Considering feature 6...	accuracy is 0.926
+Considering feature 7...	accuracy is 0.922
+Considering feature 8...	accuracy is 0.906
+Considering feature 10...	accuracy is 0.928
+On level 3, added feature 5
+
+Level 4 
+Considering feature 2...	accuracy is 0.892
+Considering feature 3...	accuracy is 0.9
+Considering feature 4...	accuracy is 0.868
+Considering feature 6...	accuracy is 0.894
+Considering feature 7...	accuracy is 0.898
+Considering feature 8...	accuracy is 0.87
+Considering feature 10...	accuracy is 0.89
+On level 4, added feature 3
+
+Level 5 
+Considering feature 2...	accuracy is 0.856
+Considering feature 4...	accuracy is 0.874
+Considering feature 6...	accuracy is 0.848
+Considering feature 7...	accuracy is 0.85
+Considering feature 8...	accuracy is 0.84
+Considering feature 10...	accuracy is 0.862
+On level 5, added feature 4
+
+Level 6 
+Considering feature 2...	accuracy is 0.81
+Considering feature 6...	accuracy is 0.834
+Considering feature 7...	accuracy is 0.824
+Considering feature 8...	accuracy is 0.836
+Considering feature 10...	accuracy is 0.824
+On level 6, added feature 8
+
+Level 7 
+Considering feature 2...	accuracy is 0.792
+Considering feature 6...	accuracy is 0.816
+Considering feature 7...	accuracy is 0.806
+Considering feature 10...	accuracy is 0.812
+On level 7, added feature 6
+
+Level 8 
+Considering feature 2...	accuracy is 0.788
+Considering feature 7...	accuracy is 0.812
+Considering feature 10...	accuracy is 0.79
+On level 8, added feature 7
+
+Level 9 
+Considering feature 2...	accuracy is 0.784
+Considering feature 10...	accuracy is 0.828
+On level 9, added feature 10
+
+Level 10 
+Considering feature 2...	accuracy is 0.792
+On level 10, added feature 2
+
+
+Best Features are: 1 9
+Best Accuracy: 0.962

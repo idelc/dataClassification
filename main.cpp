@@ -11,9 +11,8 @@ int main(){
     double big[2000][51]; 
 
     readData(small);
+    backwardElimination(small);
     forwardSelection(small);
-    readData(big);
-    forwardSelection(big);
 
     return 0;
 }
