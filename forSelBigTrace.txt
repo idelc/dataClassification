@@ -1,3 +1,5 @@
+Default rate is: 0.848
+
 Level 1 
 Considering feature 1...	accuracy is 0.737
 Considering feature 2...	accuracy is 0.7385
