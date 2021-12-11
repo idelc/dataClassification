@@ -20,7 +20,7 @@ bool isDuplicate(int nFeat, vector<unsigned> oFeat){
     return false;
 }
 
-double defaultRate(double data[][11]){
+double defaultRate(double data[][11]){ // count instances of each class, return largest # / total
     int cnt1 = 0, cnt2 = 0;
     for(unsigned i = 0; i < 500; i++){
         // cout << data[i][0] << endl;
@@ -35,7 +35,29 @@ double defaultRate(double data[][11]){
     return retVar;
 }
 
-double defaultRate(double data[][51]){
+double defaultRate(double data[][17]){ // count instances of each class, return largest # / total
+    unsigned cnts[7];
+    for(unsigned x = 0; x < 7; x++){cnts[x] = 0;}
+    for(unsigned i = 0; i < 13611; i++){
+        // cout << data[i][0] << endl;
+        cnts[static_cast<int>(data[i][0]) - 1] += 1;
+        // if(static_cast<int>(data[i][0]) == 1){
+        //     // cout << data[i][0] << " is a 1" << endl;
+        //     cnt1++;
+        // }
+    }
+    unsigned max = 0;
+    for(unsigned f = 0; f < 7; f++){
+        // cout << "checking max " << cnts[f] << endl;
+        if(cnts[f] > max){
+            max = cnts[f];
+        }
+    }
+    // cout<< "max is " << max << endl;
+    return max/13611.0;
+}
+
+double defaultRate(double data[][51]){ // count instances of each class, return largest # / total
     int cnt1 = 0, cnt2 = 0;
     for(unsigned i = 0; i < 2000; i++){
         // cout << data[i][0] << endl;
@@ -67,14 +89,14 @@ double kValidation(vector<unsigned> features, int newFeat, double data[][11]){ /
             if(i!=j){ // if not the same item
                 // write << "Ask if " << i+1 << " is nearest neighbor with " << j+1 << endl; // plus 1 since index starts at 0
                 for(unsigned k = 0; k < features.size(); k++){ // features to check
-                    distance += pow(data[i][features[k]] - data[j][features[k]], 2);
+                    distance += pow(data[i][features[k]] - data[j][features[k]], 2); // add distance ^2 to total
                     // write << distance << " for feature " << k << endl;
                 }
-                distance += pow(data[i][newFeat] - data[j][newFeat], 2);
+                distance += pow(data[i][newFeat] - data[j][newFeat], 2); // add distacne of new feat
                 // write << distance << " for feature " << newFeat << endl;
-                distance = sqrt(distance);
+                distance = sqrt(distance); // square root total
                 // write << "Final distance: " << distance << endl; 
-                if(distance < nNDist){
+                if(distance < nNDist){ // if closest, then is nearst neighbor so far
                     // write.precision (5);
                     // write << distance << " < " << nNDist << endl;
                     nNDist = distance;
@@ -117,7 +139,7 @@ double kValidation(vector<unsigned> features, int newFeat, double data[][51]){ /
                 // write << distance << " for feature " << newFeat << endl;
                 distance = sqrt(distance);
                 // write << "Final distance: " << distance << endl; 
-                if(distance < nNDist){
+                if(distance < nNDist){ // if closest, then is nearest neighbor
                     // write.precision (5);
                     // write << distance << " < " << nNDist << endl;
                     nNDist = distance;
@@ -139,7 +161,7 @@ double kValidation(vector<unsigned> features, int newFeat, double data[][51]){ /
 void forwardSelection(double data[][11]){ // going to need two versions as c++ wont allow for empty column 
     vector<unsigned> features;
     vector<double> accuVec; 
-    double bestSoFar = defaultRate(data); // too high for small data 61
+    double bestSoFar = defaultRate(data); // find largest class/ total items
     // double bestSoFar = 0.5;
     double val = 0.0;
     cout << "Default rate is: " << bestSoFar << endl << endl;
@@ -152,10 +174,10 @@ void forwardSelection(double data[][11]){ // going to need two versions as c++ w
         for(unsigned j = 1; j < 11; j++){ // start from 1 because feature 0 is ID
             bool duplicate = isDuplicate(j, features);
             if(!duplicate){
-                cout << "Considering feature " << j << "...\t";
+                // cout << "Considering feature " << j << "...\t";
                 val = kValidation(features, j, data);
                 cout.precision(5);
-                cout << "accuracy is " << val << endl;
+                // cout << "accuracy is " << val << endl;
                 if(val > BestLevel){
                     BestLevel = val;
                     fToAdd = j;
@@ -167,9 +189,9 @@ void forwardSelection(double data[][11]){ // going to need two versions as c++ w
         }
 
         if(fToAdd > 0){
-            cout << "On level " << i << ", added feature " << fToAdd << endl << endl;
+            cout << "On level " << i << ", added feature " << fToAdd << " with accuracy " << BestLevel << endl << endl;
             accuVec.push_back(BestLevel);
-            features.push_back(fToAdd);
+            features.push_back(fToAdd); // update final vectors
         }
         else { cout << endl;}
     }
@@ -208,10 +230,10 @@ void forwardSelection(double data[][51]){ // going to need two versions as c++ w
         for(unsigned j = 1; j < 51; j++){ // start from 1 because feature 0 is ID
             bool duplicate = isDuplicate(j, features);
             if(!duplicate){
-                cout << "Considering feature " << j << "...\t";
+                // cout << "Considering feature " << j << "...\t";
                 val = kValidation(features, j, data);
                 cout.precision(5);
-                cout << "accuracy is " << val << endl;
+                // cout << "accuracy is " << val << endl;
                 if(val > BestLevel){
                     BestLevel = val;
                     fToAdd = j;
@@ -223,7 +245,7 @@ void forwardSelection(double data[][51]){ // going to need two versions as c++ w
         }
 
         if(fToAdd > 0){
-            cout << "On level " << i << ", added feature " << fToAdd << endl << endl;
+            cout << "On level " << i << ", added feature " << fToAdd << " with accuracy " << BestLevel << endl << endl;
             accuVec.push_back(BestLevel);
             features.push_back(fToAdd);
         }
@@ -265,7 +287,7 @@ double kValidationRemoval(vector<unsigned> features, int newFeat, double data[][
             if(i!=j){ // if not the same item
                 // write << "Ask if " << i+1 << " is nearest neighbor with " << j+1 << endl; // plus 1 since index starts at 0
                 for(unsigned k = 0; k < features.size(); k++){ // features to check
-                    if(features[k] && (k != (newFeat-1))){
+                    if(features[k] && (k != (newFeat-1))){ // if feature has not been included, and it is not the feature we are pretending to remove
                         distance += pow(data[i][k+1] - data[j][k+1], 2);
                         // write << distance << " for feature " << k << endl;
                     }
@@ -309,10 +331,10 @@ void backwardElimination(double data[][11]){
         cout << "Level " << i << ' ' << endl;
         for(unsigned j = 1; j < 11; j++){ // start from 1 because feature 0 is ID
             if(features[j-1]){
-                cout << "Considering feature " << j << "...\t";
+                // cout << "Considering feature " << j << "...\t";
                 val = kValidationRemoval(features, j, data);
                 cout.precision(5);
-                cout << "accuracy is " << val << endl;
+                // cout << "accuracy is " << val << endl;
                 if(val > BestLevel){
                     BestLevel = val;
                     fToAdd = j;
@@ -327,15 +349,15 @@ void backwardElimination(double data[][11]){
         }
 
         if(fToAdd > 0){
-            cout << "On level " << i << ", removed feature " << fToAdd << endl << endl;
+            cout << "On level " << i << ", removed feature " << fToAdd << " with new accuracy "<< BestLevel << endl << endl;
             // accuVec[i-1] = BestLevel;
             features[fToAdd-1]=0;
             
-            cout << "\ncurrent features are: ";
-            for(unsigned x = 0; x<features.size();x++){
-                if(features[x]){cout << ' ' << x+1;}
-            }
-            cout << endl;
+            // cout << "\ncurrent features are: ";
+            // for(unsigned x = 0; x<features.size();x++){
+            //     if(features[x]){cout << ' ' << x+1;}
+            // }
+            // cout << endl;
 
         }
         else { cout << endl;}
@@ -412,10 +434,10 @@ void backwardElimination(double data[][51]){
         cout << "Level " << i << ' ' << endl;
         for(unsigned j = 1; j < 51; j++){ // start from 1 because feature 0 is ID
             if(features[j-1]){
-                cout << "Considering feature " << j << "...\t";
+                // cout << "Considering feature " << j << "...\t";
                 val = kValidationRemoval(features, j, data);
                 cout.precision(5);
-                cout << "accuracy is " << val << endl;
+                // cout << "accuracy is " << val << endl;
                 if(val > BestLevel){
                     BestLevel = val;
                     fToAdd = j;
@@ -430,15 +452,15 @@ void backwardElimination(double data[][51]){
         }
 
         if(fToAdd > 0){
-            cout << "On level " << i << ", removed feature " << fToAdd << endl << endl;
+            cout << "On level " << i << ", removed feature " << fToAdd << " with new accuracy "<< BestLevel << endl << endl;
             // accuVec[i-1] = BestLevel;
             features[fToAdd-1]=0;
             
-            cout << "\ncurrent features are: ";
-            for(unsigned x = 0; x<features.size();x++){
-                if(features[x]){cout << ' ' << x+1;}
-            }
-            cout << endl;
+            // cout << "\ncurrent features are: ";
+            // for(unsigned x = 0; x<features.size();x++){
+            //     if(features[x]){cout << ' ' << x+1;}
+            // }
+            // cout << endl;
 
         }
         else { cout << endl;}
@@ -452,6 +474,105 @@ void backwardElimination(double data[][51]){
     }
     cout << "\nBest Accuracy: " << bestSoFar << endl;
     
+}
+
+
+double kValidation(vector<unsigned> features, int newFeat, double data[][17]){ // going to need two versions as c++ wont allow for empty column 
+    // ofstream write("test.txt");
+    // if(!write.is_open()){
+    //     cout << "file not open" << endl;
+    //     exit(1);
+    // }
+    unsigned numClass = 0;
+    for(unsigned i = 0; i < 13611; i++){ // item to compare, moded for bean data set
+        double nNDist = INT32_MAX;
+        int nnLoc = -1;
+        double distance = 0;
+
+        for(unsigned j = 0; j < 13611; j++){ // compare to all neighbors in bean data
+            distance = 0; // reset distance check for neighbor
+            if(i!=j){ // if not the same item
+                // write << "Ask if " << i+1 << " is nearest neighbor with " << j+1 << endl; // plus 1 since index starts at 0
+                for(unsigned k = 0; k < features.size(); k++){ // features to check
+                    distance += pow(data[i][features[k]] - data[j][features[k]], 2);
+                    // write << distance << " for feature " << k << endl;
+                }
+                distance += pow(data[i][newFeat] - data[j][newFeat], 2);
+                // write << distance << " for feature " << newFeat << endl;
+                distance = sqrt(distance);
+                // write << "Final distance: " << distance << endl; 
+                if(distance < nNDist){
+                    // write.precision (5);
+                    // write << distance << " < " << nNDist << endl;
+                    nNDist = distance;
+                    nnLoc = j;
+                }
+            }       
+        }
+        if(data[i][0] == data[nnLoc][0]){
+            // write << "nearest neighbor is right\n" << endl;  
+            numClass++;
+        }        
+    }
+    // write << "Accuracy: " << numClass/500.0 << endl;
+    // write.close();
+    // exit(0);
+    return numClass/13611.0;
+}
+
+void forwardSelection(double data[][17]){ // going to need special version as c++ wont allow empty column 
+    vector<unsigned> features;
+    vector<double> accuVec; 
+    double bestSoFar = defaultRate(data); 
+    // double bestSoFar = 0.5;
+    double val = 0.0;
+    cout << "Default rate is: " << bestSoFar << endl << endl;
+    int fToAdd = -1;
+    double BestLevel = 0.0;
+    for(unsigned i = 1; i < 17; i++){ // search through each feature
+        fToAdd = -1;
+        BestLevel = 0.0;
+        cout << "Level " << i << ' ' << endl;
+        for(unsigned j = 1; j < 17; j++){ // start from 1 because feature 0 is ID
+            bool duplicate = isDuplicate(j, features);
+            if(!duplicate){
+                // cout << "Considering feature " << j << "...\t";
+                val = kValidation(features, j, data);
+                cout.precision(5);
+                // cout << "accuracy is " << val << endl;
+                if(val > BestLevel){
+                    BestLevel = val;
+                    fToAdd = j;
+                }
+                if(bestSoFar < BestLevel){
+                    bestSoFar = BestLevel;
+                }
+            }
+        }
+
+        if(fToAdd > 0){
+            cout << "On level " << i << ", added feature " << fToAdd << " with accuracy " << BestLevel << endl << endl;
+            accuVec.push_back(BestLevel);
+            features.push_back(fToAdd);
+        }
+        else { cout << endl;}
+    }
+
+    cout << "\nBest Features are:";
+    double bestPrint = accuVec[0];
+    for(unsigned n = 0; n < features.size(); n++){ 
+        if((n > 0) && (accuVec[n] > bestPrint)){
+            cout << ' ' << features[n];
+            bestPrint = accuVec[n];
+        }
+        else if(!n){
+            cout << ' ' << features[n];
+        }
+        // else {
+        //     n = features.size() + 1;
+        // }
+    }
+    cout << "\nBest Accuracy: " << bestPrint << endl;
 }
 
 #endif
